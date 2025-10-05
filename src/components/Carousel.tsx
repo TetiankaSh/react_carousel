@@ -6,7 +6,7 @@ interface CarouselProps {
   itemWidth?: number;
   frameSize?: number;
   step?: number;
-  animationDuration?: number;
+  animationDuration: number;
   infinite?: boolean;
 }
 
@@ -14,7 +14,7 @@ const Carousel: React.FC<CarouselProps> = ({
   images,
   itemWidth = 130,
   frameSize = 3,
-  step = 3,
+  step = 1,
   animationDuration = 1000,
   infinite = false,
 }) => {
@@ -35,10 +35,15 @@ const Carousel: React.FC<CarouselProps> = ({
     }
 
     setCurrentIndex(prev => {
-      const newIdx = prev - step;
+      let newIdx = prev - step;
 
-      if (newIdx < 0) {
-        return infinite ? maxIndex : 0;
+      if (infinite) {
+        const totalItems = images.length;
+
+        newIdx = ((newIdx % totalItems) + totalItems) % totalItems;
+        newIdx = Math.max(0, Math.min(newIdx, maxIndex));
+      } else {
+        newIdx = Math.max(0, newIdx);
       }
 
       return newIdx;
@@ -53,8 +58,11 @@ const Carousel: React.FC<CarouselProps> = ({
     setCurrentIndex(prev => {
       let newIdx = prev + step;
 
-      if (newIdx > maxIndex && infinite) {
-        newIdx = 0;
+      if (infinite) {
+        const totalItems = images.length;
+
+        newIdx = ((newIdx % totalItems) + totalItems) % totalItems;
+        newIdx = Math.max(0, Math.min(newIdx, maxIndex));
       } else {
         newIdx = Math.min(newIdx, maxIndex);
       }
@@ -79,7 +87,12 @@ const Carousel: React.FC<CarouselProps> = ({
       <ul className="Carousel__list">
         {images.map((img, i) => (
           <li key={i}>
-            <img src={img} alt={`${i + 1}`} width={itemWidth} height={130} />
+            <img
+              src={img}
+              alt={`${i + 1}`}
+              width={itemWidth}
+              height={itemWidth}
+            />
           </li>
         ))}
       </ul>

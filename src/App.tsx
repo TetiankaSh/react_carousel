@@ -7,6 +7,7 @@ interface State {
   itemWidth: number;
   frameSize: number;
   step: number;
+  animationDuration: number;
 }
 
 class App extends React.Component<{}, State> {
@@ -26,6 +27,7 @@ class App extends React.Component<{}, State> {
     itemWidth: 130,
     frameSize: 3,
     step: 3,
+    animationDuration: 1000,
   };
 
   handleItemWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,8 +42,13 @@ class App extends React.Component<{}, State> {
     this.setState({ step: Number(e.target.value) });
   };
 
+  handleAnimationDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ animationDuration: Number(e.target.value) });
+  };
+
   render() {
-    const { images, itemWidth, frameSize, step } = this.state;
+    const { images, itemWidth, frameSize, step, animationDuration } =
+      this.state;
 
     return (
       <div className="App">
@@ -77,12 +84,22 @@ class App extends React.Component<{}, State> {
           />
         </div>
 
+        <div>
+          <label htmlFor="animationDurationId">Animation Duration (ms):</label>
+          <input
+            id="animationDurationId"
+            type="number"
+            value={animationDuration}
+            onChange={this.handleAnimationDurationChange}
+          />
+        </div>
+
         <Carousel
           images={images}
           itemWidth={itemWidth}
           frameSize={frameSize}
           step={step}
-          animationDuration={1000}
+          animationDuration={animationDuration}
           infinite={false}
         />
       </div>
