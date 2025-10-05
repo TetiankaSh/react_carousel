@@ -1,4 +1,10 @@
 .Carousel {
+  --frame-width: 400px;
+  --item-width: 130px;
+  --spacing: 10px;
+  --offset: 0px;
+  --animation-duration: 1000ms;
+
   position: relative;
   width: var(--frame-width);
   overflow: hidden;

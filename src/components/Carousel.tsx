@@ -6,7 +6,7 @@ interface CarouselProps {
   itemWidth?: number;
   frameSize?: number;
   step?: number;
-  animationDuration: number;
+  animationDuration?: number;
   infinite?: boolean;
 }
 
@@ -14,7 +14,7 @@ const Carousel: React.FC<CarouselProps> = ({
   images,
   itemWidth = 130,
   frameSize = 3,
-  step = 1,
+  step = 3,
   animationDuration = 1000,
   infinite = false,
 }) => {
@@ -87,12 +87,7 @@ const Carousel: React.FC<CarouselProps> = ({
       <ul className="Carousel__list">
         {images.map((img, i) => (
           <li key={i}>
-            <img
-              src={img}
-              alt={`${i + 1}`}
-              width={itemWidth}
-              height={itemWidth}
-            />
+            <img src={img} alt={`${i + 1}`} width={itemWidth} />
           </li>
         ))}
       </ul>

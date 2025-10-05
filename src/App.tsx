@@ -30,6 +30,10 @@ class App extends React.Component<{}, State> {
     animationDuration: 1000,
   };
 
+  componentDiDMount() {
+    document.title = 'Carousel - Demo';
+  }
+
   handleItemWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ itemWidth: Number(e.target.value) });
   };
